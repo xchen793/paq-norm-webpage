@@ -41,16 +41,21 @@
 
   <!-- ABSTRACT -->
   <section id="abstract">
-    <h2 class="section-title">Overview</h2>
+    <h2 class="section-title">Abstract</h2>
     <p>
-      Facial affect perception tasks typically assume identical stimuli are equally difficult for all participants,
-      an assumption violated by individual differences in perceptual sensitivity. We propose PAQ, a lightweight 
-      query mechanism that estimates each participant's Just Noticeable Difference (JND) along the facial affect
-      spectrum, and use it to re-express stimulus distances in perceptual rather than physical units. Validated on
-      a Two-Alternative Forced-Choice task using metacognitive difficulty judgments and response-time variance, 
-      PAQ calibration significantly equalizes perceived task difficulty at the individual level, and it outperforms
-      both non-calibrated and population-level Weibull baselines. These results establish PAQ as a practical instrument 
-      for individualized perceptual calibration in facial affect recognition.
+      Behavioral tasks measuring facial affect perception assume that identical stimuli impose equivalent
+      perceptual difficulty across participants. However, this assumption is systematically violated by
+      individual differences in perceptual sensitivity. Using an affective perception task as our testbed, we
+      propose a framework to normalize for perceptual difficulty that directly estimates each participant's
+      Just Noticeable Difference (JND) along the facial affect spectrum via cognitively lightweight perceptual
+      adjustment queries (PAQs). We use these PAQ-inferred JNDs to re-express stimulus distances, constructing
+      difficulty-equated tasks in perceptual space. We validate the framework in a Two-Alternative Forced-Choice
+      (2AFC) task using two complementary behavioral measures: binary metacognitive difficulty judgments and
+      response time variance decomposition. We find that PAQ calibration significantly equalizes perceived
+      task difficulty at an individual level when compared to both the non-calibrated baseline and
+      population-level Weibull calibration, while also reducing mean response time and between-subject
+      variance in response time. These results establish PAQ as a principled and practical instrument for
+      individualized perceptual calibration in facial affect recognition.
     </p>
 
     <div class="audio-block">
@@ -141,45 +146,28 @@
   <section id="method">
     <h2 class="section-title">Method</h2>
     <p>
-      A perceptual adjustment query (PAQ) asks a participant to move a slider along a continuous stimulus path
-      until the displayed face first looks affectively different from a fixed reference face. Because the
-      slider traverses the whole path, one response implicitly compares the reference against every point along
-      the way, so a single query yields a dense, person-specific estimate of that participant's 1-JND at that
-      reference point &mdash; without requiring a full staircase or repeated binary trials. We realize this in
-      three steps.
+      A Perceptual Adjustment Query (PAQ) asks a participant to move a slider along a continuous stimulus path
+      until it first looks different from a fixed reference, and where they stop defines their personal
+      Just Noticeable Difference &mdash; recovered from a single interaction rather than many repeated trials.
+      PAQ was originally introduced for low-rank metric learning by
+      <a href="https://arxiv.org/abs/2309.04626" target="_blank" rel="noopener">Xu et al., 2023</a>;
+      here we adapt it to facial affect calibration. We realize this in three steps.
     </p>
 
-    <ol class="steps">
-      <li><b>Affect spectrum construction.</b> Starting from a neutral face, we prompt a video-generation
-        vision-language model to produce a slow, smooth transition to a target expression (happy or sad),
-        preserving identity throughout. From the resulting video, 100 sequential frames are extracted to form
-        a monotonically ordered, identity-preserved facial path.</li>
-      <li><b>Local JND calibration.</b> A reference face is shown at a fixed but undisclosed position on this
-        path. Participants move a continuous slider until the comparison face first appears affectively
-        different, and the stopping distance defines their JND at that reference point &mdash; recovered
-        from a single slider pull.</li>
-      <li><b>Behavioral 2AFC task validation.</b> Each participant's individual JNDs are used to place the
-        two faces in a downstream same/different comparison exactly one JND apart, so every participant is
-        judging a pair at the boundary of their own discriminability. We compare calibrated and non-calibrated
-        2AFC tasks across two rounds of user studies and test the significance of the calibration.</li>
-    </ol>
-
+    <h3 class="step-title">Step 1 &mdash; Affect spectrum construction</h3>
+    <p>
+      We prompt a video-generation vision-language model to morph a neutral face smoothly into a target
+      expression, preserving identity throughout. The resulting video is extracted into 100 sequential
+      frames, forming a continuous, identity-preserved path for participants to slide across.
+    </p>
     <figure>
       <img src="assets/fig4.png" alt="VLM facial PAQ path generation pipeline.">
       <figcaption>
-        <b>Figure 4.</b> Step 1 &mdash; VLM facial PAQ path generation pipeline. (A) A neutral face and a text
-        prompt are given to a vision-language video model, which produces a smooth morph from neutral to a
-        target expression while preserving identity. (B) The resulting video is post-processed into a
-        100-frame PAQ path.
+        <b>Figure 4.</b> VLM facial PAQ path generation pipeline. (A) A neutral face and a text prompt are
+        given to a vision-language video model, which produces a smooth morph while preserving identity.
+        (B) The resulting video is post-processed into a 100-frame PAQ path.
       </figcaption>
     </figure>
-
-    <p>
-      Generating a stimulus path that is simultaneously continuous, monotonic, identity-preserving, and
-      artifact-free is the main technical challenge. The paper compares AU-based morphing, GAN-based latent
-      traversal, diffusion-based interpolation, and direct multimodal-LLM image prompting against the
-      VLM video-morphing approach used here, and finds that only the latter satisfies all criteria.
-    </p>
     <figure>
       <img src="assets/fig3.png" alt="Qualitative comparison of facial expression generation methods.">
       <figcaption>
@@ -189,22 +177,35 @@
       </figcaption>
     </figure>
 
+    <h3 class="step-title">Step 2 &mdash; Local JND calibration</h3>
+    <p>
+      A participant slides continuously along that path until the face first looks affectively different
+      from a fixed reference. Wherever they stop defines their personal JND at that reference point &mdash;
+      one slider pull, one dense, person-specific measurement.
+    </p>
     <figure>
       <img src="assets/fig1.png" alt="Illustration of the PAQ-calibrated 2AFC task, from slider response to calibrated comparison.">
       <figcaption>
-        <b>Figure 1.</b> Step 2 &mdash; illustration of the PAQ-calibrated 2AFC task. First, a PAQ slider
-        response identifies the participant's just-noticeable difference with respect to the reference face
-        within a 100-frame continuum. Next, a paired comparison (2AFC) is elicited between the reference and a
-        1-JND separated face.
+        <b>Figure 1.</b> Illustration of the PAQ-calibrated 2AFC task. First, a PAQ slider response identifies
+        the participant's just-noticeable difference with respect to the reference face within a 100-frame
+        continuum. Next, a paired comparison (2AFC) is elicited between the reference and a 1-JND separated
+        face.
       </figcaption>
     </figure>
 
+    <h3 class="step-title">Step 3 &mdash; Behavioral 2AFC task validation</h3>
+    <p>
+      We rebuild the downstream same/different task using each participant's own JND, so every participant is
+      judging a pair at the boundary of their own discriminability. Two rounds of user studies then test
+      whether this calibration actually equalizes perceived task difficulty, against both an uncalibrated
+      baseline and a population-level statistical calibration.
+    </p>
     <figure>
       <img src="assets/fig8_study_design.png" alt="Pilot study and main study design: baseline or population-Weibull 2AFC, followed by PAQ, followed by PAQ-calibrated 2AFC.">
       <figcaption>
-        <b>Figure.</b> Step 3 &mdash; study design. Pilot study (52 participants): fixed-&Delta;x baseline 2AFC,
-        then PAQ, then PAQ-calibrated 2AFC. Main study (72 participants): population-level Weibull-calibrated
-        2AFC, then PAQ, then PAQ-calibrated 2AFC &mdash; testing PAQ against both an uncalibrated baseline and a
+        <b>Figure.</b> Study design. Pilot study (52 participants): fixed-&Delta;x baseline 2AFC, then PAQ,
+        then PAQ-calibrated 2AFC. Main study (72 participants): population-level Weibull-calibrated 2AFC,
+        then PAQ, then PAQ-calibrated 2AFC &mdash; testing PAQ against both an uncalibrated baseline and a
         principled, group-fitted alternative.
       </figcaption>
     </figure>
