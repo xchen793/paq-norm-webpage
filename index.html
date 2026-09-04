@@ -86,7 +86,7 @@
     <figure>
       <img src="assets/fig7_2afc_problem.png" alt="Illustration of the 2AFC task and the fixed-physical-interval problem across participants with different perceptual sensitivity.">
       <figcaption>
-        <b>Figure.</b> Left: a fixed, unified physical step &Delta;x along the facial affect spectrum produces
+        <b>Figure 1.</b> Left: a fixed, unified physical step &Delta;x along the facial affect spectrum produces
         very different perceived change across participants &mdash; barely noticeable, near-threshold, or
         clearly noticeable. Right: the downstream 2AFC task records a same/different judgment and response
         time for a fixed stimulus pair.
@@ -155,15 +155,10 @@
     </p>
 
     <h3 class="step-title">Step 1 &mdash; Affect spectrum construction</h3>
-    <p>
-      We prompt a video-generation vision-language model to morph a neutral face smoothly into a target
-      expression, preserving identity throughout. The resulting video is extracted into 100 sequential
-      frames, forming a continuous, identity-preserved path for participants to slide across.
-    </p>
     <figure>
       <img src="assets/fig4.png" alt="VLM facial PAQ path generation pipeline.">
       <figcaption>
-        <b>Figure 4.</b> VLM facial PAQ path generation pipeline. (A) A neutral face and a text prompt are
+        <b>Figure 3.</b> VLM facial PAQ path generation pipeline. (A) A neutral face and a text prompt are
         given to a vision-language video model, which produces a smooth morph while preserving identity.
         (B) The resulting video is post-processed into a 100-frame PAQ path.
       </figcaption>
@@ -171,7 +166,7 @@
     <figure>
       <img src="assets/fig3.png" alt="Qualitative comparison of facial expression generation methods.">
       <figcaption>
-        <b>Figure 3.</b> Qualitative comparison of facial expression generation methods across five criteria:
+        <b>Figure 4.</b> Qualitative comparison of facial expression generation methods across five criteria:
         identity preservation, smooth transition, monotonic expression intensity, clarity, and absence of
         artifacts. See the paper's appendix for the failure cases of each alternative method.
       </figcaption>
@@ -186,7 +181,7 @@
     <figure>
       <img src="assets/fig1.png" alt="Illustration of the PAQ-calibrated 2AFC task, from slider response to calibrated comparison.">
       <figcaption>
-        <b>Figure 1.</b> Illustration of the PAQ-calibrated 2AFC task. First, a PAQ slider response identifies
+        <b>Figure 5.</b> Illustration of the PAQ-calibrated 2AFC task. First, a PAQ slider response identifies
         the participant's just-noticeable difference with respect to the reference face within a 100-frame
         continuum. Next, a paired comparison (2AFC) is elicited between the reference and a 1-JND separated
         face.
@@ -203,7 +198,7 @@
     <figure>
       <img src="assets/fig8_study_design.png" alt="Pilot study and main study design: baseline or population-Weibull 2AFC, followed by PAQ, followed by PAQ-calibrated 2AFC.">
       <figcaption>
-        <b>Figure.</b> Study design. Pilot study (52 participants): fixed-&Delta;x baseline 2AFC, then PAQ,
+        <b>Figure 6.</b> Study design. Pilot study (52 participants): fixed-&Delta;x baseline 2AFC, then PAQ,
         then PAQ-calibrated 2AFC. Main study (72 participants): population-level Weibull-calibrated 2AFC,
         then PAQ, then PAQ-calibrated 2AFC &mdash; testing PAQ against both an uncalibrated baseline and a
         principled, group-fitted alternative.
@@ -239,7 +234,7 @@
     <figure>
       <img src="assets/fig5.png" alt="Between-subject and within-subject response time variance before and after PAQ calibration.">
       <figcaption>
-        <b>Figure 5.</b> Response-time variance before and after PAQ calibration. Left: non-calibrated baseline
+        <b>Figure 7.</b> Response-time variance before and after PAQ calibration. Left: non-calibrated baseline
         vs. PAQ. Right: population-level calibration vs. PAQ. PAQ calibration sharply reduces both
         between-subject and within-subject variance in both comparisons.
       </figcaption>
@@ -247,7 +242,7 @@
     <figure>
       <img src="assets/fig6.png" alt="Heatmaps of mean response time across the affect spectrum, before and after calibration.">
       <figcaption>
-        <b>Figure 6.</b> Mean response time across the affect spectrum for a sample of participants. Without
+        <b>Figure 8.</b> Mean response time across the affect spectrum for a sample of participants. Without
         calibration (left panels), a subset of participants show pronounced red streaks &mdash; idiosyncratically
         slow responses at particular spectrum positions. After PAQ calibration (right panels), the heatmaps
         become markedly more uniform and green (faster, more consistent responses).
